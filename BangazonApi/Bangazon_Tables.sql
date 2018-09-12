@@ -40,17 +40,17 @@ CREATE TABLE EmployeeComputers (
     EmployeeId	INTEGER NOT NULL,
     ComputerId 	INTEGER NOT NULL,
     AssignedDate DATE NOT NULL,
-    CONSTRAINT FK_EmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employees(Id),
-    CONSTRAINT FK_ComputerId FOREIGN KEY(ComputerId) REFERENCES Computers(Id)
+    CONSTRAINT FK_EmployeeComputer FOREIGN KEY(EmployeeId) REFERENCES Employees(Id),
+    CONSTRAINT FK_ComputerEmployee FOREIGN KEY(ComputerId) REFERENCES Computers(Id)
 
 );
 
 CREATE TABLE EmployeeTrainingRegiments (
     Id	        INTEGER NOT NULL PRIMARY KEY IDENTITY,
     EmployeeId	INTEGER NOT NULL,
-    ComputerId 	INTEGER NOT NULL,
-    CONSTRAINT FK_EmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employees(Id),
-    CONSTRAINT FK_ComputerId FOREIGN KEY(ComputerId) REFERENCES Computers(Id)
+    EmployeeTrainingId 	INTEGER NOT NULL,
+    CONSTRAINT FK_EmployeeTraining FOREIGN KEY(EmployeeId) REFERENCES Employees(Id),
+    CONSTRAINT FK_TrainingEmployees FOREIGN KEY(EmployeeTrainingId) REFERENCES TrainingPrograms(Id)
 
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE Products (
 	ProductTypeId INTEGER NOT NULL,
 	CustomerId INTEGER NOT NULL,
     CONSTRAINT FK_ProductTypeId FOREIGN KEY(ProductTypeId) REFERENCES ProductTypes(Id),
-    CONSTRAINT FK_CustomerId FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
+    CONSTRAINT FK_CustomerProduct FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
 
 );
 
@@ -90,7 +90,7 @@ CREATE TABLE Payments (
     Type 	   VARCHAR(80) NOT NULL,
     BillingAddress VARCHAR(100) NOT NULL,
 	CustomerId INTEGER NOT NULL,
-	CONSTRAINT FK_CustomerId FOREIGN KEY(CustomerId) REFERENCES Customers(Id),
+	CONSTRAINT FK_CustomerPayment FOREIGN KEY(CustomerId) REFERENCES Customers(Id),
 );
 
 CREATE TABLE Orders (
@@ -98,7 +98,7 @@ CREATE TABLE Orders (
     PaymentId	INTEGER NOT NULL,
     CustomerId 	INTEGER NOT NULL,
 	CONSTRAINT FK_PaymentId FOREIGN KEY(PaymentId) REFERENCES Payments(Id),
-	CONSTRAINT FK_CustomerId FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
+	CONSTRAINT FK_CustomerOrders FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
 );
 
 CREATE TABLE ProductOrders (

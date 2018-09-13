@@ -1,3 +1,5 @@
+USE Bangazon;
+
 DELETE FROM Departments;
 DELETE FROM Employees;
 DELETE FROM Computers;
@@ -15,21 +17,18 @@ DELETE FROM ProductOrders;
 
 
 ALTER TABLE Employees DROP CONSTRAINT [FK_Department_Employees];
-ALTER TABLE EmployeeComputers DROP CONSTRAINT [FK_EmployeeId];
-ALTER TABLE EmployeeComputers DROP CONSTRAINT [FK_ComputerId];
-ALTER TABLE EmployeeTrainingRegiments DROP CONSTRAINT [FK_EmployeeId];
-ALTER TABLE EmployeeTrainingRegiments DROP CONSTRAINT [FK_ComputerId];
+ALTER TABLE EmployeeComputers DROP CONSTRAINT [FK_EmployeeComputer];
+ALTER TABLE EmployeeComputers DROP CONSTRAINT [FK_ComputerEmployee];
+ALTER TABLE EmployeeTrainingRegiments DROP CONSTRAINT [FK_EmployeeTraining];
+ALTER TABLE EmployeeTrainingRegiments DROP CONSTRAINT [FK_TrainingEmployees];
 ALTER TABLE Products DROP CONSTRAINT [FK_ProductTypeId];
 ALTER TABLE Products DROP CONSTRAINT [FK_CustomerId];
-ALTER TABLE Payments DROP CONSTRAINT [FK_CustomerId];
+ALTER TABLE Payments DROP CONSTRAINT [FK_CustomerPayment];
 ALTER TABLE Orders DROP CONSTRAINT [FK_PaymentId];
-ALTER TABLE Orders DROP CONSTRAINT [FK_CustomerId];
+ALTER TABLE Orders DROP CONSTRAINT [FK_CustomerOrders];
 ALTER TABLE ProductOrders DROP CONSTRAINT [FK_OrderId];
 ALTER TABLE ProductOrders DROP CONSTRAINT [FK_ProductId];
-ALTER TABLE Instructor DROP CONSTRAINT [FK_Cohort];
-ALTER TABLE Instructor DROP CONSTRAINT [FK_Cohort];
-ALTER TABLE Instructor DROP CONSTRAINT [FK_Cohort];
-ALTER TABLE Instructor DROP CONSTRAINT [FK_Cohort];
+
 
 
 DROP TABLE IF EXISTS Departments;

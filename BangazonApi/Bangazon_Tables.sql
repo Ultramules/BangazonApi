@@ -80,7 +80,7 @@ CREATE TABLE Products (
 	ProductTypeId INTEGER NOT NULL,
 	CustomerId INTEGER NOT NULL,
     CONSTRAINT FK_ProductTypeId FOREIGN KEY(ProductTypeId) REFERENCES ProductTypes(Id),
-    CONSTRAINT FK_CustomerProduct FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
+    CONSTRAINT FK_CustomerId FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
 
 );
 

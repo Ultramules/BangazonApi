@@ -14,6 +14,5 @@ namespace firstSprint.Models
         public Customers Customer { get; set; }
 
 
-
     }
 }

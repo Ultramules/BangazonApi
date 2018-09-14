@@ -17,7 +17,7 @@ namespace firstSprint.Controllers
     {
         private readonly IConfiguration _config;
 
-        public ExercisesController(IConfiguration config)
+        public PaymentTypeController(IConfiguration config)
         {
             _config = config;
         }

@@ -1,4 +1,4 @@
-USE Bangazon;
+
 
 DELETE FROM Departments;
 DELETE FROM Employees;

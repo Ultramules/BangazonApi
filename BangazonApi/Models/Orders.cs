@@ -10,6 +10,12 @@ namespace firstSprint.Models
         public int Id { get; set; }
         public PaymentTypes PaymentType { get; set; }
         public Customers Customer { get; set; }
+        public List<Products> Products { get; set; }
+
+        internal object Distinct()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 //CREATE TABLE Orders(

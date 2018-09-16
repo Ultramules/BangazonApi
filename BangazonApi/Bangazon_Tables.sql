@@ -56,6 +56,7 @@ CREATE TABLE EmployeeTrainingRegiments (
 
 -- External Table
 
+commit 
 CREATE TABLE Customers (
     Id	        INTEGER NOT NULL PRIMARY KEY IDENTITY,
     FirstName	VARCHAR(80) NOT NULL,

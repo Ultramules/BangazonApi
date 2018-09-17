@@ -17,6 +17,8 @@ namespace firstSprint.Controllers
     public class PaymentTypeController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private object exercise;
+        private object newPaymentTypesId;
 
         public PaymentTypeController(IConfiguration config)
         {
@@ -24,6 +26,10 @@ namespace firstSprint.Controllers
         }
 
         public IDbConnection Connection => new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+
+        public object Id { get; private set; }
+        public object TypeAccountNumber { get; private set; }
+        public object Type { get; private set; }
 
 
         //Verbs to be supported
@@ -63,8 +69,25 @@ namespace firstSprint.Controllers
 
         // POST: api/PaymentType
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] PaymentTypeController paymentTypes)
         {
+            string sql = $@"INSERT INTO PaymentTypes
+            (`TypeAccountNumber`, `Type`)
+            VALUES
+            ('{paymentTypes.TypeAccountNumber}', '{paymentTypes.Type}');
+            select seq from sqlite_sequence where name='Exercise';";
+
+            using (IDbConnection conn = Connection)
+            {
+                var newPaymentTypeControllerId = (await conn.QueryAsync<int>(sql)).Single();
+                paymentTypes.Id = newPaymentTypesId;
+                return CreatedAtRoute("GetPaymentTypes", new { id = newPaymentTypesId }, paymentTypes);
+            }
+        }
+
+        private IActionResult CreatedAtRoute(string v, object p, object exercise)
+        {
+            throw new NotImplementedException();
         }
 
         // PUT: api/PaymentType/5

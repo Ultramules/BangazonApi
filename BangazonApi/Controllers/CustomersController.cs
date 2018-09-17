@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,16 +14,33 @@ namespace firstSprint.Controllers
     {
         // GET: api/Customers
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            string sql = @"
+            SELECT
+            c.Id,
+            c.FirstName,
+            c.LastName,
+            c.AccountCreationDate,
+            c.LastLoginDate
+            FROM Customers c
+
+";
         }
 
         // GET: api/Customers/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
-        {
-            return "value";
+        public async Task<IActionResult> Get([FromRoute]int id)
+            {
+                string sql = $"SELECT Id, Name, Language FROM Exercise WHERE Id = {id}";
+
+                using (IDbConnection conn = Connection)
+                {
+                    IEnumerable<Exercise> exercises = await conn.QueryAsync<Exercise>(sql);
+                    return Ok(exercises);
+                }
+            }
         }
 
         // POST: api/Customers

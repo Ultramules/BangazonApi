@@ -11,3 +11,5 @@ namespace firstSprint.Models
         public string ProductType { get; set; }
     }
 }
+
+//author: Emily, -This code is getting and setting all of the data from ProducTypes

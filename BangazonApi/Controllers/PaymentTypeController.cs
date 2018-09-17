@@ -50,9 +50,11 @@ namespace firstSprint.Controllers
 
         // GET: api/PaymentType/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<IActionResult> Get([FromRoute]int id)
         {
-            return "value";
+            string sql = $"SELECT Id, TypeAccountNumber, Type, BillingAddress, Customer  FROM PaymentTypes WHERE Id = {id}";
+
+            using (IDbConnection conn = Connection)
         }
 
         // POST: api/PaymentType

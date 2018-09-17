@@ -55,6 +55,10 @@ namespace firstSprint.Controllers
             string sql = $"SELECT Id, TypeAccountNumber, Type, BillingAddress, Customer  FROM PaymentTypes WHERE Id = {id}";
 
             using (IDbConnection conn = Connection)
+            {
+                var fullPaymentTypes = await conn.QueryAsync<PaymentTypes>(sql);
+                return Ok(fullPaymentTypes);
+            }
         }
 
         // POST: api/PaymentType

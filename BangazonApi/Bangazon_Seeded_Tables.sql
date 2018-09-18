@@ -22,10 +22,10 @@ INSERT INTO Employees (FirstName, LastName, Supervisor, DepartmentId) VALUES
 
 
 
-INSERT INTO EmployeeComputers (EmployeeId,ComputerId, AssignedDate) VALUES 
-(2, 2, '2018-12-13'),
-(2, 2,'2014-12-11'),
-(3, 3,'2018-02-13');
+INSERT INTO EmployeeComputers (EmployeeId,ComputerId, AssignedDate, UnAssignDate) VALUES 
+(1, 2, '2018-12-13', NULL),
+(2, 3,'2014-12-11', NULL),
+(3, 1,'2018-02-13', NULL);
 
 INSERT INTO EmployeeTrainingRegiments (EmployeeId, EmployeeTrainingId) VALUES
 (2,2),

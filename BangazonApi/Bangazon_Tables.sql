@@ -40,6 +40,7 @@ CREATE TABLE EmployeeComputers (
     EmployeeId	INTEGER NOT NULL,
     ComputerId 	INTEGER NOT NULL,
     AssignedDate DATE NOT NULL,
+	UnAssignDate Date,
     CONSTRAINT FK_EmployeeComputer FOREIGN KEY(EmployeeId) REFERENCES Employees(EmployeeId),
     CONSTRAINT FK_ComputerEmployee FOREIGN KEY(ComputerId) REFERENCES Computers(ComputerId)
 

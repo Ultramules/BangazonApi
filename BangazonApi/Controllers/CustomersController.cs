@@ -19,11 +19,7 @@ namespace firstSprint.Controllers
         }
 
         // GET: api/Customers/5
-<<<<<<< HEAD
-        [HttpGet("{id}", Name = "GetCustomers")]
-=======
         [HttpGet("{id}", Name = "GetCustomerId")]
->>>>>>> master
         public string Get(int id)
         {
             return "value";

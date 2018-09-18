@@ -20,7 +20,7 @@ INSERT INTO Employees (FirstName, LastName, Supervisor, DepartmentId) VALUES
 ('John', 'Sherby', 1, 2),
 ('Mary', 'Luke', 0, 3);
 
-SELECT * FROM Employees;
+
 
 INSERT INTO EmployeeComputers (EmployeeId,ComputerId, AssignedDate) VALUES 
 (2, 2, '2018-12-13'),

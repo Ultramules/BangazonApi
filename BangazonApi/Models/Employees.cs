@@ -12,7 +12,14 @@ namespace firstSprint.Models
         public string LastName { get; set; }
         public bool Supervisor { get; set; }
         public Departments Department { get; set; }
+        public int DepartmentsId { get; set; }
+        public Computers Computer { get; set; }
+        public int ComputerId { get; set; }
     }
 }
+
+//purpose: the purpose of this model is to hold the info for Employees
+// author: Adelaide
+//methods: No methods
 
 

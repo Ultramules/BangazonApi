@@ -72,23 +72,23 @@ namespace firstSprint.Controllers
             }
         }
 
-       // POST: api/PaymentType
-       //[HttpPostAttribute]
-       // public async Task<IActionResult> Post([FromBody] PaymentType paymentTypes)
-       // {
-       //     string sql = $@"INSERT INTO PaymentTypes
-       //     (`TypeAccountNumber`, `Type`)
-       //     VALUES
-       //     ('{paymentTypes.TypeAccountNumber}', '{paymentTypes.Type}');
-       //     select seq from sqlite_sequence where name='Exercise';";
+        //POST: api/PaymentType
+       [HttpPostAttribute]
+         public async Task<IActionResult> Post([FromBody] Payment payment)
+        {
+            string sql = $@"INSERT INTO Payment
+             (TypeAccountNumber, Type, BillingAddress, Customer)
+             VALUES
+             ('{payment.TypeAccountNumber}', '{payment.Type}', '{payment.BillingAddress}','{payment.Customer}');
+             select MAX(Id) from Payment";
 
-       //     using (IDbConnection conn = Connection)
-       //     {
-       //         var newPaymentTypeControllerId = (await conn.QueryAsync<int>(sql)).Single();
-       //         paymentTypes.Id = newPaymentTypesId;
-       //         return CreatedAtRoute("GetPaymentTypes", new { id = newPaymentTypesId }, paymentTypes);
-       //     }
-       // }
+            using (IDbConnection conn = Connection)
+            {
+                var newPaymentTypeId = (await conn.QueryAsync<int>(sql)).Single();
+                payment.Id = newPaymentTypeId;
+                return CreatedAtRoute("GetPaymentTypes", new { id = newPaymentTypeId }, payment);
+            }
+        }
 
         // PUT: api/PaymentType/5
         [HttpPut("{id}")]

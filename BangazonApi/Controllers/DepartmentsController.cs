@@ -37,7 +37,7 @@ namespace BangazonAPI.Controllers
         {
             using (IDbConnection conn = Connection)
             {
-                string sql = $"SELECT * FROM Departments WHERE Id = {id}";
+                string sql = $"SELECT * FROM Departments WHERE DepartmentId = {id}";
 
                 var SingleDepartment = (await conn.QueryAsync<Departments>(sql)).Single();
                 return Ok(SingleDepartment);
@@ -52,12 +52,12 @@ namespace BangazonAPI.Controllers
             (Name, ExpenseBudget)
             VALUES
             ('{department.Name}', '{department.ExpenseBudget}');
-            select MAX(Id) from Departments";
+            select MAX(DepartmentId) from Departments";
 
             using (IDbConnection conn = Connection)
             {
                 var createDepartmentId = (await conn.QueryAsync<int>(sql)).Single();
-                department.Id = createDepartmentId;
+                department.DepartmentId = createDepartmentId;
                 return CreatedAtRoute("GetDepartment", new { id = createDepartmentId }, department);
             }
         }
@@ -65,7 +65,7 @@ namespace BangazonAPI.Controllers
         // checks to see if deparment is already in database 
         private bool InvalidDepartment(int id)
         {
-            string sql = $"SELECT Id, Name, ExpenseBudget FROM Departments WHERE Id = {id}";
+            string sql = $"SELECT Id, Name, ExpenseBudget FROM Departments WHERE DepartmentId = {id}";
             using (IDbConnection conn = Connection)
             {
                 return conn.Query<Departments>(sql).Count() > 0;
@@ -81,7 +81,7 @@ namespace BangazonAPI.Controllers
             UPDATE Departments
             SET Name = '{department.Name}',
                 ExpenseBudget = '{department.ExpenseBudget}'
-            WHERE Id = {id}";
+            WHERE DepartmentId = {id}";
             try
             {
                 using (IDbConnection conn = Connection)
@@ -108,36 +108,40 @@ namespace BangazonAPI.Controllers
         }
 
         //   GET /Departments?_include=employees
-        //   If returns employees then returns a list of departments each with a list of their employees
-        //   Else returns a list of departments
+        //   Method: If returns employees then returns a list of departments each with a list of their employees
+        //   Method: Else returns a list of departments
         [HttpGet]
-        public async Task<IActionResult> Get(string _include)
+        public async Task<IActionResult> Get(string _include, string _budget, int _greaterThan)
         {
-            string sql = "Select * FROM Departments";
-            if (_include != null && _include.Contains("employees"))
-            {
-                sql = "SELECT * FROM Departments AS A INNER JOIN Employees AS DE ON A.Id = B.DepartmentId;";
-            }
             using (IDbConnection conn = Connection)
             {
-                if (_include == "employees")
+                string sql = "Select * FROM Departments";
+
+                if (_include != null && _include.Contains("employee"))
                 {
-                    Dictionary<int, Departments> employeesOfDepartment = new Dictionary<int, Departments>();
-                    var queryDepartments = await conn.QueryAsync<Departments, Employees, Departments>(
-                        sql,
-                        (department, employee) =>
+
+                    sql = $" Select * FROM Departments JOIN Employee ON Departments.DepartmentId = Employee.DepartmentId";
+                    Dictionary<int, Departments> report = new Dictionary<int, Departments>();
+                    var fullDep = await conn.QueryAsync<Departments, Employees, Departments>(
+                    sql, (department, employee) =>
+                    {
+                        if (!report.ContainsKey(department.DepartmentId))
                         {
-                            Departments departmentData;
-                            if (!employeesOfDepartment.TryGetValue(department.Id, out departmentData))
-                            {
-                                departmentData = department;
-                                departmentData.EmployeeList = new List<Employees>();
-                                employeesOfDepartment.Add(departmentData.Id, departmentData);
-                            }
-                            departmentData.EmployeeList.Add(employee);
-                            return departmentData;
-                        });
-                    return Ok(queryDepartments.Distinct());
+                            report[department.DepartmentId] = department;
+                        }
+                        report[department.DepartmentId].EmployeeList.Add(employee);
+                        return department;
+                    }, splitOn: "DepartmentId, EmployeeId"
+                        );
+                    return Ok(report.Values);
+                }
+
+                if (_greaterThan > 1)
+                {
+                    sql = $@"SELECT * FROM Department WHERE ExpenseBudget >= {_greaterThan}";
+                    var budget = await conn.QueryAsync<Departments>(
+                        sql);
+                    return Ok(budget);
                 }
                 var departments = await conn.QueryAsync<Departments>(sql);
                 return Ok(departments);

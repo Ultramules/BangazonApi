@@ -29,8 +29,7 @@ namespace firstSprint.Controllers
     public class PaymentsController : ControllerBase
     {
         private readonly IConfiguration _config;
-        //private object exercise;
-        //private object newPaymentTypesId;
+    
 
         public PaymentsController(IConfiguration config)
         {
@@ -59,6 +58,7 @@ namespace firstSprint.Controllers
             };
         }
 
+        // This GET method will allow the user to query a payment time by ID. 
         // GET: api/PaymentType/5
         [HttpGet("{id}", Name = "GetPaymentType")]
         public async Task<IActionResult> Get([FromRoute]int id)
@@ -72,21 +72,22 @@ namespace firstSprint.Controllers
             }
         }
 
+        // This Post Method allows the user to post a payment type to the database.
         //POST: api/PaymentType
        [HttpPostAttribute]
          public async Task<IActionResult> Post([FromBody] Payment payment)
         {
-            string sql = $@"INSERT INTO Payment
-             (TypeAccountNumber, Type, BillingAddress, Customer)
+            string sql = $@"INSERT INTO Payments
+             (TypeAccountNumber, Type, BillingAddress, CustomerId)
              VALUES
-             ('{payment.TypeAccountNumber}', '{payment.Type}', '{payment.BillingAddress}','{payment.Customer}');
-             select MAX(Id) from Payment";
+             ('{payment.TypeAccountNumber}', '{payment.Type}', '{payment.BillingAddress}','{payment.CustomerId}');
+             select MAX(Id) from Payments";
 
             using (IDbConnection conn = Connection)
             {
                 var newPaymentTypeId = (await conn.QueryAsync<int>(sql)).Single();
                 payment.Id = newPaymentTypeId;
-                return CreatedAtRoute("GetPaymentTypes", new { id = newPaymentTypeId }, payment);
+                return CreatedAtRoute("GetPaymentType", new { id = newPaymentTypeId }, payment);
             }
         }
 

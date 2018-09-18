@@ -12,6 +12,7 @@ namespace firstSprint.Models
         public string Type { get; set; }
         public string BillingAddress { get; set; }
         public Customers Customer { get; set; }
+        public int CustomerId { get; set; }
 
 
     }

@@ -58,7 +58,7 @@ namespace firstSprint.Controllers
             };
         }
 
-        // This GET method will allow the user to query a payment time by ID. 
+        // This GET method will allow the developers to query a payment time by ID. 
         // GET: api/PaymentType/5
         [HttpGet("{id}", Name = "GetPaymentType")]
         public async Task<IActionResult> Get([FromRoute]int id)
@@ -72,7 +72,7 @@ namespace firstSprint.Controllers
             }
         }
 
-        // This Post Method allows the user to post a payment type to the database.
+        // This Post Method allows the developers to post a payment type to the database.
         //POST: api/PaymentType
        [HttpPostAttribute]
          public async Task<IActionResult> Post([FromBody] Payment payment)
@@ -93,8 +93,44 @@ namespace firstSprint.Controllers
 
         // PUT: api/PaymentType/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] Payment payment)
         {
+            string sql = $@"
+            UPDATE PaymentType
+            SET TypeAccountNumber = '{payment.TypeAccountNumber}',
+                Type = '{payment.Type}',
+                BillingAddress = '{payment.BillingAddress}',
+                CustomerId = '{payment.CustomerId}'
+            WHERE Id = {id}";
+
+            try
+            {
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+                    if (rowsAffected > 0)
+                    {
+                        return new StatusCodeResult(StatusCodes.Status204NoContent);
+                    }
+                    throw new Exception("No rows affected");
+                }
+            }
+            catch (Exception)
+            {
+                if (PaymentsExists(id))
+                {
+                    throw;
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        private bool PaymentsExists(int id)
+        {
+            throw new NotImplementedException();
         }
 
         // DELETE: api/ApiWithActions/5
@@ -112,5 +148,15 @@ namespace firstSprint.Controllers
     {
     }
 }
+//// Queries all data in Payments table
+//private bool PaymentsExists(int id)
+//{
+//    string sql = $"SELECT Id, TypeAccountNumber, Type, BillingAddress, CustomerId FROM Payment WHERE Id = {id}";
+//    using (IDbConnection conn = Connection)
+//    {
+//        return conn.Query<Payment>(sql).Count() > 0;
+//    }
+//}
+    
 
 

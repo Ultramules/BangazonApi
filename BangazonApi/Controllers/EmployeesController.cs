@@ -60,7 +60,7 @@ namespace firstSprint.Controllers
         [HttpGet("{id}", Name = "GetEmployees")]
         public async Task<IActionResult> Get([FromRoute]int id)
         {
-            string sql = $"SELECT * FROM Employees WHERE Id = {id}";
+            string sql = $"SELECT * FROM Employees WHERE EmployeeId = {id}";
 
             using (IDbConnection conn = Connection)
             {
@@ -92,9 +92,9 @@ namespace firstSprint.Controllers
             Console.WriteLine(sql);
             using (IDbConnection conn = Connection)
             {
-                var employeeId = (await conn.QueryAsync<int>(sql)).Single();
-                employee.Id = employeeId;
-                return CreatedAtRoute("GetEmployees", new { id = employeeId }, employee);
+                var CreateEmployeeId = (await conn.QueryAsync<int>(sql)).Single();
+                employee.EmployeeId = CreateEmployeeId;
+                return CreatedAtRoute("GetEmployees", new { id = CreateEmployeeId }, employee);
             }
         }
 

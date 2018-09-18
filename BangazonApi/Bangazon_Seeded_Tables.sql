@@ -28,7 +28,7 @@ INSERT INTO EmployeeComputers (EmployeeId,ComputerId, AssignedDate, UnAssignDate
 (3, 1,'2018-02-13', NULL);
 
 INSERT INTO EmployeeTrainingRegiments (EmployeeId, EmployeeTrainingId) VALUES
-(2,2),
+(2, 2),
 (3, 1),
 (2, 3);
 

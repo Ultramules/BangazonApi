@@ -43,8 +43,13 @@ namespace firstSprint.Controllers
             }
         }
         // GET: api/Products/5
+<<<<<<< HEAD
+        [HttpGet("{id}", Name = "GetProducts")]
+        public string Get(int id)
+=======
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> Get([FromRoute] int id)
+>>>>>>> master
         {
             using (IDbConnection conn = Connection)
             {

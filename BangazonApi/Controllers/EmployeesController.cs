@@ -41,22 +41,7 @@ namespace firstSprint.Controllers
 
             string sql = @"
         SELECT * FROM Employees
-            //SELECT
-            //    e.Id,
-            //    e.FirstName,
-            //    e.LastName,
-            //    e.Supervisor,
-            //    d.Id,
-            //    d.Name, 
-            //    c.Id, 
-            //    c.PurchaseDate,
-            //    c.DecommisionDate,
-            //    c.Make,
-            //    c.Model
-            //FROM Employees e
-            //JOIN Departments d ON d.Id = e.DepartmentId
-            //JOIN EmployeeComputers ec ON ec.EmployeeId = e.Id
-            //JOIN Computers c ON c.Id = ec.ComputerId
+
             
             ";
 

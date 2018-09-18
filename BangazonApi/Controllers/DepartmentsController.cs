@@ -10,9 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-// Author: Evan Lusky
-// Exposes Departments to users, allows user to add employees to department query.
-
 namespace BangazonAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -25,7 +22,6 @@ namespace BangazonAPI.Controllers
         {
             _config = config;
         }
-
         public IDbConnection Connection
         {
             get
@@ -64,7 +60,6 @@ namespace BangazonAPI.Controllers
                 department.Id = createDepartmentId;
                 return CreatedAtRoute("GetDepartment", new { id = createDepartmentId }, department);
             }
-
         }
 
         // checks to see if deparment is already in database 
@@ -87,7 +82,6 @@ namespace BangazonAPI.Controllers
             SET Name = '{department.Name}',
                 ExpenseBudget = '{department.ExpenseBudget}'
             WHERE Id = {id}";
-
             try
             {
                 using (IDbConnection conn = Connection)
@@ -113,8 +107,41 @@ namespace BangazonAPI.Controllers
             }
         }
 
-
-
-
+        //   GET /Departments?_include=employees
+        //   If returns employees then returns a list of departments each with a list of their employees
+        //   Else returns a list of departments
+        [HttpGet]
+        public async Task<IActionResult> Get(string _include)
+        {
+            string sql = "Select * FROM Departments";
+            if (_include != null && _include.Contains("employees"))
+            {
+                sql = "SELECT * FROM Departments AS A INNER JOIN Employees AS DE ON A.Id = B.DepartmentId;";
+            }
+            using (IDbConnection conn = Connection)
+            {
+                if (_include == "employees")
+                {
+                    Dictionary<int, Departments> employeesOfDepartment = new Dictionary<int, Departments>();
+                    var queryDepartments = await conn.QueryAsync<Departments, Employees, Departments>(
+                        sql,
+                        (department, employee) =>
+                        {
+                            Departments departmentData;
+                            if (!employeesOfDepartment.TryGetValue(department.Id, out departmentData))
+                            {
+                                departmentData = department;
+                                departmentData.EmployeeList = new List<Employees>();
+                                employeesOfDepartment.Add(departmentData.Id, departmentData);
+                            }
+                            departmentData.EmployeeList.Add(employee);
+                            return departmentData;
+                        });
+                    return Ok(queryDepartments.Distinct());
+                }
+                var departments = await conn.QueryAsync<Departments>(sql);
+                return Ok(departments);
+            }
+        }
     }
 }

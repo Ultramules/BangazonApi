@@ -55,13 +55,14 @@ INSERT INTO Payments (TypeAccountNumber, Type, BillingAddress,CustomerId) VALUES
 (12356, 'Visa', '242 Orange St', 2),
 (13553, 'Chase', '234 Peach Circle',1);
 
-INSERT INTO Orders (PaymentId, CustomerId) VALUES
-(1, 2),
-(2, 1),
-(3, 3);
+INSERT INTO Orders (Completed, PaymentId, CustomerId) VALUES
+(1, 1, 2),
+(0, 2, 1),
+(1, 3, 3);
 
 INSERT INTO ProductOrders (OrderId, ProductId) VALUES
 (1, 2),
+(1, 3),
 (2, 2),
 (3, 3);
 

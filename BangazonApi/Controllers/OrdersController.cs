@@ -97,7 +97,7 @@ namespace firstSprint.Controllers
         {
             //Sql code that is getting the item from the list matching the id they put in the route.
             string SqlCode = $@"SELECT * FROM Orders o
-                                WHERE o.Id = {id}";
+                                WHERE o.OrderId = {id}";
             using (IDbConnection conn = Connection)
             {
                 //Using Dapper to connect the SQL with the C#

@@ -95,6 +95,7 @@ CREATE TABLE Payments (
 
 CREATE TABLE Orders (
     OrderId	        INTEGER NOT NULL PRIMARY KEY IDENTITY,
+	Completed	Bit NOT NULL,
     PaymentId	INTEGER NOT NULL,
     CustomerId 	INTEGER NOT NULL,
 	CONSTRAINT FK_PaymentId FOREIGN KEY(PaymentId) REFERENCES Payments(PaymentId),

@@ -7,7 +7,7 @@ namespace firstSprint.Models
 {
     public class ProductOrders
     {
-        public int Id { get; set; }
+        public int ProductOrderId { get; set; }
         public Orders Order { get; set; }
         public Products Product { get; set; }
     }

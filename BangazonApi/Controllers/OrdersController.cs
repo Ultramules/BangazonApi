@@ -42,15 +42,14 @@ namespace firstSprint.Controllers
             (string _include, bool completed) queries = (_include, completed);
             //Each SQL request needed for getting proper information. Breaking up the variables is needed for logic
             //that requires different joins based on different queries requested by the user.
-            string SqlSelect = "SELECT * " +
-                               "FROM Orders o";
-            string SqlJoinProducts = "JOIN ProductOrders po ON po.OrderId = o.Id" +
-                                     " JOIN Products p ON p.Id = po.ProductId";
+            string SqlSelect = @"Select * FROM Orders o";
+            string SqlJoinProducts = "JOIN ProductOrders po ON o.OrderId = po.OrderId" +
+                                     " JOIN Products p ON p.ProductId = po.ProductId";
             string SqlJoin = "";
             //If the user uses the include query with customers then the customer info should be joined onto the Orders table
             if(queries._include != null && queries._include.Contains("customers"))
             {
-                SqlJoin = "JOIN Customers c on c.Id = o.CustomerId";
+                SqlJoin = "JOIN Customers c on c.CustomerId = o.CustomerId";
             }
             // Main Sql variable that will be used below
             string Sql = $"{SqlSelect} {SqlJoinProducts} {SqlJoin}";
@@ -60,27 +59,34 @@ namespace firstSprint.Controllers
                 //Dictionary created to hold all the Order instances requested
                 Dictionary<int, Orders> OrderDictionary = new Dictionary<int, Orders>();
                 //Dapper is allowing us to connect our C# with the SQL and make the requests here
-                var OrdersQuery = await conn.QueryAsync<Orders, Products, Orders>(Sql,
-                    (Order, Product) =>
-                    {
+                try {
+                    var OrdersQuery = await conn.QueryAsync<Orders, Products, Orders>(Sql,
+                   (Order, Product) =>
+                   {
                         //Creating an instance of an Order to populate the information in the model
                         Orders OrderInstance;
-                        if (!OrderDictionary.TryGetValue(Order.Id, out OrderInstance))
-                        {
-                            OrderInstance = Order;
-                            OrderInstance.Products = new List<Products>();
+                       if (!OrderDictionary.TryGetValue(Order.OrderId, out OrderInstance))
+                       {
+                           OrderInstance = Order;
+                           OrderInstance.Products = new List<Products>();
                             //Adding each Order instance into the dictionary. There is an iteration allowing
                             //Each item to go into the dictionary.
-                            OrderDictionary.Add(OrderInstance.Id, OrderInstance);
-                        }
+                            OrderDictionary.Add(OrderInstance.OrderId, OrderInstance);
+                       }
                         //Adding each product related to the Orders into a list so it is accessed for every search
                         OrderInstance.Products.Add(Product);
-                        //Returning the Order Instance fully populated with the necessary information.
+                        //Returning the Order Instance fully populated with the necessary information
                         return OrderInstance;
-                    }
-                    );
+                   },
+                   splitOn: "ProductId"
+                   );
+                } catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+               
                 //Returning the status code 200 letting the user know their request was granted.
-                return Ok(OrdersQuery.Distinct());
+                return Ok(OrderDictionary.Values);
             }
 
         }

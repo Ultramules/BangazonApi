@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +16,11 @@ using firstSprint.Models;
 
 namespace firstSprint.Controllers
 {
+<<<<<<< HEAD
     [Route("[controller]")]
+=======
+    [Route("api/[controller]")]
+>>>>>>> master
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -49,7 +56,11 @@ namespace firstSprint.Controllers
         {
             using (IDbConnection conn = Connection)
             {
+<<<<<<< HEAD
                 string sql = $"SELECT * FROM Products WHERE Id = {id}";
+=======
+                string sql = $"SELECT * FROM Products WHERE ProductId = {id}";
+>>>>>>> master
 
                 var theSingleExercise = (await conn.QueryAsync<Products>(sql)).Single();
                 return Ok(theSingleExercise);
@@ -69,7 +80,11 @@ namespace firstSprint.Controllers
             using (IDbConnection conn = Connection)
             {
                 var ProductId = (await conn.QueryAsync<int>(sql)).Single();
+<<<<<<< HEAD
                 product.Id = ProductId;
+=======
+                product.ProductId = ProductId;
+>>>>>>> master
                 return CreatedAtRoute("GetProduct", new { id = ProductId }, product);
             }
 
@@ -142,6 +157,7 @@ namespace firstSprint.Controllers
     }
 }
 
+<<<<<<< HEAD
 =======
 ﻿using System;
 using System.Collections.Generic;
@@ -286,4 +302,6 @@ namespace firstSprint.Controllers
     }
 }
 
+>>>>>>> master
+=======
 >>>>>>> master

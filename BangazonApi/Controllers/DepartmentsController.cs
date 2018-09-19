@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using BangazonAPI.Models;
 using Dapper;
+<<<<<<< HEAD
+=======
+using firstSprint.Models;
+>>>>>>> master
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -149,6 +156,7 @@ namespace BangazonAPI.Controllers
             }
         }
     }
+<<<<<<< HEAD
 =======
 ﻿using System;
 using System.Collections.Generic;
@@ -302,3 +310,6 @@ namespace BangazonAPI.Controllers
     }
 >>>>>>> master
 }
+=======
+}
+>>>>>>> master

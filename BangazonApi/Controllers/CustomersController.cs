@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +48,7 @@ namespace firstSprint.Controllers
         }
     }
 }
+<<<<<<< HEAD
 =======
 ﻿using System;
 using System.Collections.Generic;
@@ -92,4 +96,6 @@ namespace firstSprint.Controllers
         }
     }
 }
+>>>>>>> master
+=======
 >>>>>>> master

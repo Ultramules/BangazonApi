@@ -1,32 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using BangazonAPI.Models;
 
-namespace BangazonAPI.Models
+namespace firstSprint.Models
 {
-
     public class Employees
     {
-
-        [Key]
-        public int Id { get; set; }
-
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        public DateTime HireDate { get; set; }
-
-        public bool IsSupervisor { get; set; }
-
-        public int DepartmentId { get; set; }
-
+        public bool Supervisor { get; set; }
         public Departments Department { get; set; }
-
+        public int DepartmentsId { get; set; }
         public Computers Computer { get; set; }
-
-
+        public int ComputerId { get; set; }
     }
 }
+
+//purpose: the purpose of this model is to hold the info for Employees
+// author: Adelaide
+//methods: No methods
+
+

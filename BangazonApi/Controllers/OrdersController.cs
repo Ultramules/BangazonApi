@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -147,6 +150,7 @@ namespace firstSprint.Controllers
         //}
     }
 }
+<<<<<<< HEAD
 =======
 ﻿using System.Collections.Generic;
 using System.Data;
@@ -296,4 +300,6 @@ namespace firstSprint.Controllers
         //}
     }
 }
+>>>>>>> master
+=======
 >>>>>>> master

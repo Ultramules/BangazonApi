@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BangazonAPI.Models;
 using Dapper;
+using firstSprint.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

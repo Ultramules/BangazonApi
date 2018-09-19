@@ -12,7 +12,7 @@ using firstSprint.Models;
 
 namespace firstSprint.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -48,7 +48,7 @@ namespace firstSprint.Controllers
         {
             using (IDbConnection conn = Connection)
             {
-                string sql = $"SELECT * FROM Products WHERE Id = {id}";
+                string sql = $"SELECT * FROM Products WHERE ProductId = {id}";
 
                 var theSingleExercise = (await conn.QueryAsync<Products>(sql)).Single();
                 return Ok(theSingleExercise);
@@ -68,7 +68,7 @@ namespace firstSprint.Controllers
             using (IDbConnection conn = Connection)
             {
                 var ProductId = (await conn.QueryAsync<int>(sql)).Single();
-                product.Id = ProductId;
+                product.ProductId = ProductId;
                 return CreatedAtRoute("GetProduct", new { id = ProductId }, product);
             }
 

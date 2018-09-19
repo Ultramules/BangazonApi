@@ -22,10 +22,10 @@ INSERT INTO Employees (FirstName, LastName, Supervisor, DepartmentId) VALUES
 
 SELECT * FROM Employees;
 
-INSERT INTO EmployeeComputers (EmployeeId,ComputerId, AssignedDate) VALUES 
-(2, 2, '2018-12-13'),
-(2, 2,'2014-12-11'),
-(3, 3,'2018-02-13');
+INSERT INTO EmployeeComputers (EmployeeId,ComputerId, AssignedDate, UnAssignDate) VALUES 
+(1, 2, '2018-12-13', NULL),
+(2, 3,'2014-12-11', NULL),
+(3, 1,'2018-02-13', NULL);
 
 INSERT INTO EmployeeTrainingRegiments (EmployeeId, EmployeeTrainingId) VALUES
 (2,2),
@@ -55,13 +55,14 @@ INSERT INTO Payments (TypeAccountNumber, Type, BillingAddress,CustomerId) VALUES
 (12356, 'Visa', '242 Orange St', 2),
 (13553, 'Chase', '234 Peach Circle',1);
 
-INSERT INTO Orders (PaymentId, CustomerId) VALUES
-(1, 2),
-(2, 1),
-(3, 3);
+INSERT INTO Orders (Completed, PaymentId, CustomerId) VALUES
+(1, 1, 2),
+(0, 2, 1),
+(1, 3, 3);
 
 INSERT INTO ProductOrders (OrderId, ProductId) VALUES
 (1, 2),
+(1, 3),
 (2, 2),
 (3, 3);
 

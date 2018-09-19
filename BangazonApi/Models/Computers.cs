@@ -7,7 +7,7 @@ namespace firstSprint.Models
 {
     public class Computers
     {
-        public int Id { get; set; }
+        public int ComputerId { get; set; }
 
         public DateTime PurchaseDate { get; set; }
 
